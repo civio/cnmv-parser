@@ -18,7 +18,8 @@ CSV::readlines('companies.csv').each do |id, company_name|
     page = agent.get(company_page_url(id))
     # Sometimes they don't use the hyphen in the id, so we try both
     if page.content.include?('No hay datos para mostrar')
-        page = agent.get(company_page_url(id.delete('-')))
+        id.delete!('-')
+        page = agent.get(company_page_url(id))
     end
     
     # Download the relevant sections
